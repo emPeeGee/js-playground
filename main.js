@@ -191,7 +191,7 @@ function shortestWordPath(startWord, endWord, wordList) {
         const path = queue.shift(); // Get the current path from the queue
         const lastWord = path[path.length - 1]; // Last word in the current path
 
-        console.log('path', path, lastWord, queue, )
+        // console.log('path', path, lastWord, queue, )
 
         if (lastWord === endWord) return path;
 
@@ -240,7 +240,65 @@ let day = dayofweek(29, 9, 2024);
 // Provide a non-heuristic solution to determine the shortest path of word transitions between two words. ex) flab -> slab -> slob. No focus on efficiency, only limit to solution is that it you need to be able to say for sure the solution is the shortest path.
 // Define your own implementation for a hash map data structure in JavaScript
 // Define your own implementation of a queue data structure
+class Queue {
+  constructor () {
+    this.queue = {};
+    this.frontIndex = 0
+    this.backIndex = 0;
+  }
+
+  // Add elements at the end of the queue.
+  enqueue(item) {
+    this.queue[this.backIndex] = item;
+    this.backIndex++;
+  }
+
+  // Remove an element from the front of the queue.
+  dequeue() {
+    const toBeRemoved = this.queue[this.frontIndex];
+    delete this.queue[this.frontIndex];
+    this.frontIndex++;
+
+    return toBeRemoved;
+  }
+
+  // Get the front element without removing it.
+  peek() {
+    return this.queue[this.frontIndex]
+  }
+
+  // Check whether an element is present in the queue or not.
+  isEmpty() {
+    return this.backIndex === this.frontIndex;
+  }
+
+  toString() {
+    let str = ''
+    for (let i = this.frontIndex; i < this.backIndex; i++) {
+      str += `${this.queue[i]}, `
+    }
+
+    return str;
+  }
+}
+
+const queue = new Queue()
+queue.enqueue(7);
+queue.enqueue(2);
+queue.enqueue(6);
+queue.enqueue(4);
+console.log(queue.dequeue())
+console.log(queue.peek())
+console.log(String(queue))
+
+
+
+
 // Define your own implementation of a stack data structure
+// const stack = [];
+// stack.push(2);       // stack is now [2]
+// stack.push(5);       // stack is now [2, 5]
+// const i = stack.pop(); // stack is now [2]
 // Define your own implementation of a list data structure
 // Define your own implementation of a linked list data structure
 
