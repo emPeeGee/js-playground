@@ -62,8 +62,8 @@ var nestedArraySum = function (array) {
 };
 
 
-console.log(nestedArraySum([1,[2,3],[[4]],5])); // 15
-console.log(nestedArraySum([1,[2,3],[[4]],5, [1, [[[1, 2, 1.1, 1]]]]])); // 21
+// console.log(nestedArraySum([1,[2,3],[[4]],5])); // 15
+// console.log(nestedArraySum([1,[2,3],[[4]],5, [1, [[[1, 2, 1.1, 1]]]]])); // 21
 
 // 4. Check if a number is even.
 // ??? 
@@ -132,11 +132,20 @@ var reverse = function (string) {
   return  reverse(string.slice(1)) + string[0];
 };
 
-console.log(reverse('dcba'));
+// console.log(reverse('dcba'));
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function (string) {
+  function reversed(s) {
+    if (s === '') return ''
+    return reversed(s.slice(1)) + s[0]
+  }
+
+  return string === reversed(string)
 };
+
+// console.log(palindrome('hello'))
+// console.log(palindrome('cojoc'))
 
 // 11. Write a function that returns the remainder of x divided by y without using the
 // modulo (%) operator.
