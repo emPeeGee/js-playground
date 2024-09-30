@@ -80,8 +80,55 @@ Array.prototype.reduce2 = function(cb, initial) {
 
 
 // Please do a code review of the example code and try for each recommendation to define a code styleguide rule that the team can agree on
-// Please order the console.log outputs in the correct order (there are nested setTimeouts, promises etc.). Need good understanding of the event loop and call stack.
+
 // Please implement quick sort
+// NOTE: not my implementation
+function partition(arr, low, high) {
+
+    // Choose the pivot
+    const pivot = arr[high];
+
+    let i = low - 1;
+
+    // Traverse arr[low..high] and move all smaller
+    // elements on the left side. Elements from low to 
+    // i are smaller after every iteration
+    for (let j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+    }
+
+    // Move pivot after smaller elements and
+    // return its position
+    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+    return i + 1;
+}
+
+// The QuickSort function implementation
+function quickSort(arr, low, high) {
+    if (low < high) {
+        // pi is the partition return index of pivot
+        const pi = partition(arr, low, high);
+
+        console.log(arr, low, high, pi)
+
+        // Recursion calls for smaller elements
+        // and greater or equals elements
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+
+// Driver code
+// const arr = [10, 7, 8, 1, 0, 9, 1, 5,];
+// console.log("Given array is", arr);
+// quickSort(arr, 0, arr.length - 1);
+// console.log("\nSorted array is", arr);
+
+
 // Please implement binary search
 
 function binarySearch(arr, target) {
@@ -217,7 +264,7 @@ const wordList = ["flab", "slab", "slob", "blob", "blab"];
 const start = "flab";
 const end = "slob";
 // console.log(shortestWordPath(start, end, wordList));
-console.log(shortestWordPath('hit', 'cog', ["hot","dot","dog","lot","log","cog"]))
+// console.log(shortestWordPath('hit', 'cog', ["hot","dot","dog","lot","log","cog"]))
 // Output: ["flab", "slab", "slob"]
 
 
@@ -282,14 +329,14 @@ class Queue {
   }
 }
 
-const queue = new Queue()
-queue.enqueue(7);
-queue.enqueue(2);
-queue.enqueue(6);
-queue.enqueue(4);
-console.log(queue.dequeue())
-console.log(queue.peek())
-console.log(String(queue))
+// const queue = new Queue()
+// queue.enqueue(7);
+// queue.enqueue(2);
+// queue.enqueue(6);
+// queue.enqueue(4);
+// console.log(queue.dequeue())
+// console.log(queue.peek())
+// console.log(String(queue))
 
 
 
