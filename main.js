@@ -177,8 +177,8 @@ const nestedObj = {
     }
   }
 }
-console.log(nestedObj)
-console.log(loopNestedObject(nestedObj , (e) => console.log(e)))
+// console.log(nestedObj)
+// console.log(loopNestedObject(nestedObj , (e) => console.log(e)))
 
 // 8. Find all strings in an array of strings which are palindromes
 // 9. Count the most used character in a long string
@@ -343,6 +343,87 @@ class Queue {
 // const i = stack.pop(); // stack is now [2]
 // 21. Define your own implementation of a list data structure
 // 22. Define your own implementation of a linked list data structure
+class LLNode {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+}
+class LinkedList {
+  #size = 0;
+
+  constructor() {
+    this.head = null;
+    this.#size = 0;
+  }
+
+  add(element) {
+    let node = new LLNode(element);
+    let current = null;
+
+    if (this.head === null) {
+      this.head = node;
+    } else {
+      current = this.head;
+      while (current.next) {
+        current = current.next;
+      }
+
+      current.next = node;
+    }
+
+    this.#size++;
+  }
+
+    // insert element at the position index
+    // of the list
+    insertAt(element, index) {}
+
+    // removes an element from the
+    // specified location
+    removeFrom(index) {}
+
+    // removes a given element from the
+    // list
+    removeElement(element) {}
+
+    // finds the index of element
+    indexOf(element) {}
+
+    /**
+     * 
+     * @returns number of elements
+     */
+    length() {
+      return this.#size;
+    }
+
+    isEmpty() {
+      return this.#size === 0;
+    }
+
+
+    toString() {
+      let curr = this.head;
+      let str = '';
+
+      while (curr) {
+        str += curr.value + ', ';
+        curr = curr.next;
+      }
+
+      return str;
+    }
+}
+
+const ll = new LinkedList();
+console.log(ll.isEmpty(), ll.length())
+ll.add(3);
+ll.add(4);
+ll.add(5);
+console.log(ll.isEmpty(), ll.length())
+
+console.log(String(ll))
 
 // 23. You have an array of random integers. Return the first couple of integers which sum 
 // equals a particular given number.  What is the Big O notation score for your algorithm?
