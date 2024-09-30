@@ -34,7 +34,7 @@ f1(); // a2 = 0 will not iMPact the closure of f1
 */
 
 
-// Please write your custom version of a utility for function memorization.
+// 1. Please write your custom version of a utility for function memorization.
 function memoized(c) {
   const cache = new Map();
 
@@ -55,7 +55,7 @@ function memoized(c) {
 // console.log(computation(1, 2))
 // console.log(computation(1, 2))
 
-// Please write your own polyfill function for array.reduce.
+// 2. Please write your own polyfill function for array.reduce.
 Array.prototype.reduce2 = function(cb, initial) {
   if (typeof cb !== 'function') {
     throw new Error('cb is not a function')
@@ -79,12 +79,11 @@ Array.prototype.reduce2 = function(cb, initial) {
 // console.log(null.reduce2(null, 1))
 
 
-// Please do a code review of the example code and try for each recommendation to define a code styleguide rule that the team can agree on
+// 3. Please do a code review of the example code and try for each recommendation to define a code styleguide rule that the team can agree on
 
-// Please implement quick sort
+// 4. Please implement quick sort
 // NOTE: not my implementation
 function partition(arr, low, high) {
-
     // Choose the pivot
     const pivot = arr[high];
 
@@ -121,16 +120,13 @@ function quickSort(arr, low, high) {
     }
 }
 
-
 // Driver code
 // const arr = [10, 7, 8, 1, 0, 9, 1, 5,];
-// console.log("Given array is", arr);
 // quickSort(arr, 0, arr.length - 1);
 // console.log("\nSorted array is", arr);
 
 
-// Please implement binary search
-
+// 5. Please implement binary search
 function binarySearch(arr, target) {
   if (!arr.length) {
     return null;
@@ -139,7 +135,6 @@ function binarySearch(arr, target) {
   let left = 0;
   let right = arr.length;
   let mid = Math.floor(arr.length / 2);
-  // let index
 
   while (left !== right) {
     console.log(left, mid, right, target)
@@ -152,45 +147,44 @@ function binarySearch(arr, target) {
     }
       mid = Math.floor((left + right) / 2) 
   }
-
 }
 
 // console.log(binarySearch([4, 6, 8, 10, 12, 15, 18], 18))
 
-
-// Please loop through a nested Object with recursion using for...of loop
-
+// 7. Please loop through a nested Object with recursion using for...of loop
 function loopNestedObject(obj, cb) {
   if (typeof obj !== 'object') {
     cb(obj)
   }
-  for (let key in obj) {
+  for (let key of Object.keys(obj)) {
     loopNestedObject(obj[key], cb)
   }
 }
 
-// console.log(loopNestedObject(
-//   {
-//     a: 10,
-//     b: 20,
-//      c: {
-//       d: 13,
-//       z: {
-//         a: 1, b: 3, t: [12,3,4]
-//       },
-//       e: {
-//         f: {
-//           g: 122,
-//         },
-//         h: 9
-//       }
-// }}, (e) => console.log(e)))
+const nestedObj = {
+  a: 10,
+  b: 20,
+  c: {
+    d: 13,
+    z: {
+      a: 1, b: 3, t: [12,3,4]
+    },
+    e: {
+      f: {
+        g: 122,
+      },
+      h: 9
+    }
+  }
+}
+console.log(nestedObj)
+console.log(loopNestedObject(nestedObj , (e) => console.log(e)))
 
-// Find all strings in an array of strings which are palindromes
-// Count the most used character in a long string
-// Implement deep cloning of a nested object
-// Reference of cloning an object
-// Fibonacci with and without recursion
+// 8. Find all strings in an array of strings which are palindromes
+// 9. Count the most used character in a long string
+// 10. Implement deep cloning of a nested object
+// 11. Reference of cloning an object
+// 12. Fibonacci with and without recursion
 function fibonacci(n) {
   let aux = 1;
   let r = 0
@@ -222,9 +216,9 @@ function fibonacciRef(n) {
 // console.log(fibonacci(17))
 // console.log(fibonacciRef(5))
 
-// Print out Fizz for multiple of 3, Buzz for multiple of 5, Fizz Buzz for multiple of 3 and 5.
+// 13.  Print out Fizz for multiple of 3, Buzz for multiple of 5, Fizz Buzz for multiple of 3 and 5.
 
-// Given a list of real words, write an algorithm that takes a start
+// 14. Given a list of real words, write an algorithm that takes a start
 // and end word and returns the shortest path between changing one 
 // letter at a time with each step being a real word. 
 function shortestWordPath(startWord, endWord, wordList) {
@@ -268,11 +262,12 @@ const end = "slob";
 // Output: ["flab", "slab", "slob"]
 
 
-// Reverse a string with your preferred language.
+// 15. Reverse a string with your preferred language.
 
 
-// Given date A and its corresponding day-of-week, find the day-of-week for some future date B.
+// 16. Given date A and its corresponding day-of-week, find the day-of-week for some future date B.
 // https://www.geeksforgeeks.org/find-day-of-the-week-for-a-given-date/
+// NOTE: not my implementation
 function dayofweek(d, m, y)
 {
     let t = [ 0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4 ];
@@ -284,9 +279,9 @@ let day = dayofweek(29, 9, 2024);
 // console.log('day', day)
    
 
-// Provide a non-heuristic solution to determine the shortest path of word transitions between two words. ex) flab -> slab -> slob. No focus on efficiency, only limit to solution is that it you need to be able to say for sure the solution is the shortest path.
-// Define your own implementation for a hash map data structure in JavaScript
-// Define your own implementation of a queue data structure
+// 17. Provide a non-heuristic solution to determine the shortest path of word transitions between two words. ex) flab -> slab -> slob. No focus on efficiency, only limit to solution is that it you need to be able to say for sure the solution is the shortest path.
+// 18. Define your own implementation for a hash map data structure in JavaScript
+// 19. Define your own implementation of a queue data structure
 class Queue {
   constructor () {
     this.queue = {};
@@ -341,15 +336,15 @@ class Queue {
 
 
 
-// Define your own implementation of a stack data structure
+// 20. Define your own implementation of a stack data structure
 // const stack = [];
 // stack.push(2);       // stack is now [2]
 // stack.push(5);       // stack is now [2, 5]
 // const i = stack.pop(); // stack is now [2]
-// Define your own implementation of a list data structure
-// Define your own implementation of a linked list data structure
+// 21. Define your own implementation of a list data structure
+// 22. Define your own implementation of a linked list data structure
 
-// You have an array of random integers. Return the first couple of integers which sum 
+// 23. You have an array of random integers. Return the first couple of integers which sum 
 // equals a particular given number.  What is the Big O notation score for your algorithm?
 // Can you do it without nested loops? How will you optimize your solution?
 // N^2
