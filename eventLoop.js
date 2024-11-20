@@ -30,14 +30,8 @@ async function run() {
   console.log("Kiwi");
 }
 
-run()
-// Banana
-// Grape
-// Apple
-// I must resolve before moving on
-// Kiwi
-// Orange
-// Pear
+// run()
+// Banana,Grape, Apple, Kiwi, Orange, Pear
 
 
 
@@ -68,7 +62,7 @@ async function run1() {
 }
 
 // run1();
-// start, promise 1, after promise 1, promise 2, after promise 2, timeout 2, timeout 1
+// Start, Promise 1, After Promise 1, Promise 2, After Promise 2, Timeout 2, Timeout 1
 
 
 async function run2() {
@@ -98,7 +92,7 @@ async function run2() {
 }
 
 // run2();
-// step 1, step 3, step 4, step 2, step 6,  step 5
+// Step 1, Step 3, Step 4, Step 2, Step 6, Step 5
 
 
 async function run3() {
@@ -137,9 +131,7 @@ async function run3() {
 }
 
 // run3();
-// begin, promise 1 start, promise 1 end, middle, promise 2 start, promise 2 end, end, step A,
-// real: 
-// Begin, Promise 1 Start, Promise 1 End,  Middle, Promise 2 Start, Step A, Promise 2 End, End
+// Begin, Promise 1 start, promise 1 end, middle, Promise 2 start, Step A, Promise 2 end,end 
 
 
 async function run3Modified() {
@@ -171,7 +163,7 @@ async function run3Modified() {
 }
 
 // run3Modified();
-// begin, promise 1 start, middle, promise 2 start, end, promise 2 end, promise 1 end, step A
+// begin, promise1start, promise 1 end, middle, promise 2 start, stepA, end
 
 async function run4() {
   console.log("Task 1");
@@ -228,7 +220,7 @@ async function run5() {
 }
 
 // run5();
-// Phase 1, Phase 3, Phase 4, Phase 2, Phase 5, Phase 6
+// Thase 1, Phase 3, Phase 4, Phase 2, Phase 5, Phase 6
 
 
 async function run6() {
@@ -257,6 +249,6 @@ async function run6() {
   console.log("Step 4");
 }
 
-// run6();
-// Init, Step1,  Step 2, Step3, Step 4, Async 2, Async 1
+run6();
+// Init, step 1, step 2, step 3, step 4, async 2, async 1
 

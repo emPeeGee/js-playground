@@ -230,11 +230,14 @@ function shortestWordPath(startWord, endWord, wordList) {
 
     while (queue.length > 0) {
         const path = queue.shift(); // Get the current path from the queue
+      console.log(path, queue)
         const lastWord = path[path.length - 1]; // Last word in the current path
 
         // console.log('path', path, lastWord, queue, )
 
-        if (lastWord === endWord) return path;
+        if (lastWord === endWord) {
+          return path;
+        }
 
         // Try changing each letter of the current word to form new words
         for (let i = 0; i < lastWord.length; i++) {
@@ -257,7 +260,8 @@ function shortestWordPath(startWord, endWord, wordList) {
 const wordList = ["flab", "slab", "slob", "blob", "blab"];
 const start = "flab";
 const end = "slob";
-// console.log(shortestWordPath(start, end, wordList));
+console.log(shortestWordPath(start, end, wordList));
+console.log('====================================================================================')
 // console.log(shortestWordPath('hit', 'cog', ["hot","dot","dog","lot","log","cog"]))
 // Output: ["flab", "slab", "slob"]
 
@@ -351,20 +355,16 @@ class LLNode {
 }
 class LinkedList {
   #size = 0;
-
-  constructor() {
-    this.head = null;
-    this.#size = 0;
-  }
+  #head = null
 
   add(element) {
     let node = new LLNode(element);
     let current = null;
 
-    if (this.head === null) {
-      this.head = node;
+    if (this.#head === null) {
+      this.#head = node;
     } else {
-      current = this.head;
+      current = this.#head;
       while (current.next) {
         current = current.next;
       }
@@ -375,55 +375,141 @@ class LinkedList {
     this.#size++;
   }
 
-    // insert element at the position index
-    // of the list
-    insertAt(element, index) {}
-
-    // removes an element from the
-    // specified location
-    removeFrom(index) {}
-
-    // removes a given element from the
-    // list
-    removeElement(element) {}
-
-    // finds the index of element
-    indexOf(element) {}
-
-    /**
-     * 
-     * @returns number of elements
-     */
-    length() {
-      return this.#size;
-    }
-
-    isEmpty() {
-      return this.#size === 0;
+  insertAt(element, index) {
+    if (index < 0 || index > this.#size) {
+      throw new Error('Index is invalid')
     }
 
 
-    toString() {
-      let curr = this.head;
-      let str = '';
+    let current = this.#head;
+    let prev = null;
+    let currentIdx = 0;
+    let node = new LLNode(element);
 
-      while (curr) {
-        str += curr.value + ', ';
-        curr = curr.next;
+    if (index === 0) {
+      node.next = current;
+      this.#head = node;
+      this.#size++;
+    } else {
+      while(current.next) {
+        if(index === currentIdx) {
+          console.log(current)
+          node.next = current;
+          prev.next = node;
+          this.#size ++;
+        }
+
+        prev = current;
+        current = current.next;
+        currentIdx++;
       }
-
-      return str;
     }
+  }
+
+
+  // removes an element from the specified location
+  removeFrom(index) {
+    if (index < 0 || index >= this.#size) {
+      throw new Error('Index is invalid')
+    }
+
+    let current = this.#head;
+    let prev = null;
+    let currentIdx = 0;
+
+    if (index === 0) {
+      this.#head = current.next;
+      this.#size--;
+    } else {
+      while (current) {
+        if (currentIdx === index) {
+          prev.next = current.next;
+          this.#size--;
+          break;
+        }
+
+
+        prev = current;
+        current = current.next;
+        currentIdx++;
+      }
+    }
+  }
+
+  // removes a given element from the
+  // list
+  removeElement(element) {
+    let current = this.#head;
+    let prev = null;
+    let currentIdx = 0;
+
+    while (current) {
+      if (current.value === element) {
+        if (currentIdx === 0) {
+          this.#head = current.next;
+          this.#size--;
+          break;
+        }
+
+        prev.next = current.next;
+        this.#size--;
+        break;
+      }
+      
+
+
+      prev = current;
+      current = current.next;
+      currentIdx++;
+    }
+  }
+
+  // finds the index of element
+  indexOf(element) {}
+
+  /**
+   * 
+   * @returns number of elements
+   */
+  length() {
+    return this.#size;
+  }
+
+  isEmpty() {
+    return this.#size === 0;
+  }
+
+
+  toString() {
+    let curr = this.#head;
+    let str = '';
+
+    while (curr) {
+      str += curr.value + ', ';
+      curr = curr.next;
+    }
+
+    return str;
+  }
 }
 
-const ll = new LinkedList();
-console.log(ll.isEmpty(), ll.length())
-ll.add(3);
-ll.add(4);
-ll.add(5);
-console.log(ll.isEmpty(), ll.length())
+// const ll = new LinkedList();
+// ll.add(3);
+// ll.add(4);
+// ll.add(5);
+// ll.add(6);
+// ll.add(5);
+// console.log(String(ll))
 
-console.log(String(ll))
+// ll.insertAt(9, 2)
+// ll.insertAt(8, 0)
+// // ll.insertAt(8, 6)
+// console.log(String(ll))
+// ll.removeFrom(4)
+// console.log(String(ll))
+// ll.removeFrom(5)
+// ll.removeElement(16)
+// console.log(String(ll))
 
 // 23. You have an array of random integers. Return the first couple of integers which sum 
 // equals a particular given number.  What is the Big O notation score for your algorithm?
@@ -461,3 +547,306 @@ function firstCoupleOfInts2(arr, target) {
 const a = [1, 2, 3, 5, 6, 1, 2, 3, 4, 5];
 // console.log(firstCoupleOfInts(a, 12))
 // console.log(firstCoupleOfInts2(a, 2))
+
+// BFS algorithm
+function bfs(graph, vertex, cb) {
+  const queue = [];
+  const visited = new Set([]);
+
+  queue.push(vertex)
+  visited.add(vertex);
+
+  while (queue.length > 0) {
+    const currentNode = queue.shift();
+    
+    for (let i = 0; i < graph[currentNode].length; i++) {
+      const adj = graph[currentNode][i];
+
+      if (!visited.has(adj)) {
+        cb(adj)
+        visited.add(adj);
+        queue.push(adj);
+      }
+    }
+  }
+}
+
+
+// const vertexN = 5;
+// const myGraph = Array.from({length: vertexN}, () => [])
+
+// // console.log(myGraph[1].length)
+// // Function to add an edge to the graph
+// function addEdge(adj, u, v) {
+//     adj[u].push(v);
+//     adj[v].push(u);
+// }
+
+// addEdge(myGraph, 0, 1);
+// addEdge(myGraph, 0, 2);
+// addEdge(myGraph, 1, 3);
+// addEdge(myGraph, 1, 4);
+// addEdge(myGraph, 2, 4);
+// console.log(myGraph)
+
+// bfs(myGraph, 0, console.log)
+
+
+
+// function debounce(cb, timeout) {
+//   let timerId = null;
+
+//   return (...args) => {
+//     if (timerId) {
+//       clearTimeout(timerId);
+//     }
+
+//     timerId = setTimeout(() => {
+//       cb(...args)
+//     }, timeout);
+//   }
+// }
+
+
+// const log = debounce((...args) => console.log('log it', ...args), 400);
+// log(1);
+// log(2);
+// log(3);
+
+
+// setTimeout(() => {
+//   log(5);
+//   log(6);
+// }, 500)
+
+
+// return pivot position
+function pivot2(arr, start, end) {
+  const pv = arr[end];
+  let pvIdx = start;
+
+  for (let i = start; i < end; i++) {
+    if (pv >= arr[i]) {
+      const aux = arr[pvIdx];
+      arr[pvIdx] = arr[i];
+      arr[i] = aux;
+      pvIdx++;
+    }
+  }
+
+  const aux = arr[pvIdx];
+  arr[pvIdx] = arr[end];
+  arr[end] = aux;
+  return pvIdx;
+}
+
+function quickSorting(arr, start, end) {
+  if (start < end) {
+    const pv = pivot2(arr, start, end);
+    console.log(pv, start ,end)
+    quickSorting(arr, start, pv - 1);
+    quickSorting(arr, pv + 1, end)
+  }
+}
+
+// function toTimeout(cb) {
+//   const maxExecutionTime = 1000;  // 1 second limit
+//   const startTime = Date.now();
+
+//   while(true) {
+//     console.log('aaa')
+//     cb();
+
+
+//     if (Date.now() - startTime > maxExecutionTime) {
+//       throw new Error('Loop took too long, breaking out!')
+//     }
+//   }
+// }
+
+
+function withTimeout(fn, timeout = 1000) {
+  return new Promise((resolve, reject) => {
+    // Start a timer that will reject after the timeout
+    const timer = setTimeout(() => {
+      reject(new Error(`Function execution timed out after ${timeout}ms`));
+    }, timeout);
+
+    // Run the provided function
+    Promise.resolve(fn())
+      .then((result) => {
+        clearTimeout(timer); // Clear the timeout if function finishes in time
+        resolve(result); // Resolve with the function result
+      })
+      .catch((error) => {
+        clearTimeout(timer); // Clear the timeout on function error
+        reject(error); // Reject with the function error
+      });
+  });
+}
+
+
+const arr = [4, 2, 1, 6, 4, 2, 3];
+// [4, 1, 6, 2, 3]
+// [4, 1, 6, 2, 3]
+//              ^
+// [1, 2, 3, 4, 6]
+// [1, 2, 3] [4, 6]        
+
+
+// [6, 5, 4, 3, 2, 1]
+//                 ^
+// [1, 6, 5, 4, 3, 2]
+// [1][6, 5, 4, 3, 2]
+//                 ^
+
+console.log(arr)
+quickSorting(arr, 0, arr.length - 1);
+console.log(arr)
+
+
+// sunt foarte buni
+// sunt o persoana pozitiva, vorbesc frumos, 
+
+// [x] este important sa vorbesc in timpul live coding, am inteles bine intrebarea? asta trebuie facut?
+// [x] zambeste
+// pot sa vin cu idee, m-am gandit la asta, pot sa fac asa...
+// Add type check and throw errors
+// cel mai important, sa vorbesc,
+// intrebarile date au fost din word => De repetat
+// Big(O) , in timp de live coding chiar
+// Async operations with log
+// exercitiile dificele ii pare prea mult pentru interviu
+// sa fiu transparent, in caz ca uit ceva
+// trebuie sa arat ca pot gandi algoritmic
+// cineva a facut struggle => Nu trebuie
+// cum as testa functia, ce valori am pune
+// nu trebuie de facut in minte, dar cu glas pentru a vedea cum gandesc
+// trebuie de pregatit sa ma prezint catre ei
+// ei vor o persoana cu care pot lucra, nu arogant, nu se enerveaza
+// ar putea sa ma provoce, sa fiu calm, sa raspund frumos
+// cum as face un site de genul la cu betting si scoruri. Tehnologii..., responsive design..., 
+// sunt primul care va trece interviul decat a venit Ist
+
+// tell me more about the project, the tech stack, your best practices...
+
+// mie nu mi-o intrebat
+
+
+
+// the most frequent character:
+
+/**
+ * 
+ * @param {String} str 
+ * @returns {Number} 
+ */
+function theMostFreqCh(str) {
+  let theM = '';
+  let numberOfTimes = 0;
+  let freq = new Map();
+
+  let filteredStr = str.toLocaleLowerCase().replaceAll(new RegExp('[^A-Za-z0-9]', 'g'), '')
+  console.log(filteredStr)
+
+
+  for (let ch of filteredStr) {
+    freq.set(ch, freq.has(ch) ? freq.get(ch) + 1 : 1 )
+    if (freq.get(ch) > numberOfTimes) {
+      theM = ch;
+      numberOfTimes = freq.get(ch);
+    }
+  }
+
+  console.log(freq, theM, numberOfTimes)
+
+  return numberOfTimes;
+}
+
+
+const str = 'There was a time in the past when 2432'
+console.log(theMostFreqCh(str))
+
+
+// Subject (Observable)
+class Subject {
+    constructor() {
+        this.observers = [];  // List of observers
+    }
+
+    // Add an observer
+    subscribe(observer) {
+        this.observers.push(observer);
+    }
+
+    // Remove an observer
+    unsubscribe(observer) {
+        this.observers = this.observers.filter(obs => obs !== observer);
+    }
+
+    // Notify all observers
+    notify(data) {
+        this.observers.forEach(observer => observer.update(data));
+    }
+}
+
+// Observer
+class Observer {
+    constructor(name) {
+        this.name = name;
+    }
+
+    // Called when the subject notifies observers
+    update(data) {
+        console.log(`${this.name} received data: ${data}`);
+    }
+}
+
+// Example usage:
+
+// Create the subject
+const subject = new Subject();
+
+// Create some observers
+const observer1 = new Observer('Observer 1');
+const observer2 = new Observer('Observer 2');
+
+// Subscribe the observers to the subject
+subject.subscribe(observer1);
+subject.subscribe(observer2);
+
+// Notify observers with some data
+subject.notify('Hello Observers!');
+
+// Unsubscribe one observer and notify again
+subject.unsubscribe(observer1);
+subject.notify('Another update!');
+
+
+function flatten(arr) {
+  if (typeof arr !== 'object') {
+    return arr
+  }
+
+  let fl = [];
+  for (let el of arr) {
+    fl = fl.concat(flatten(el))
+  }
+
+  return fl;
+
+}
+
+// const arr1 = [1,[[1,2,1], 4,3,3], 2,3] 
+// console.log(arr1)
+// console.log(flatten(arr1))
+
+String.prototype.isPalindrom = function() {
+    console.log(this, this.toString());
+    const aa = this.toString().split('').reverse().join('');
+    return aa === this.toString();
+}
+
+console.log('cojoc'.isPalindrom())
+
+
